@@ -1,9 +1,11 @@
 // src/components/Home.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Login from './Login'; // Assuming Login is your login button component
 
 const Home = () => {
   const navigate = useNavigate();
+  const [userName, setUserName] = useState('');
   const token = localStorage.getItem('spotifyAuthToken');
 
   if (!token) {
@@ -21,6 +23,7 @@ const Home = () => {
       },
     });
     const data = await response.json();
+    setUserName(data.display_name);
     console.log(data); // Log the response for now
   };
 
@@ -32,8 +35,11 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Welcome to the Spotify Integration App</h1>
-      {/* Display Spotify data or other content here */}
+      {token ? (
+        <h1>{userName && <p>Hi {userName}</p>}</h1>
+      ) : (
+        <Login />
+      )}
     </div>
   );
 };

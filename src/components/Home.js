@@ -1,7 +1,6 @@
 // src/components/Home.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Login from './Login'; // Assuming Login is your login button component
 import CurrentlyPlaying from './CurrentlyPlaying';
 
 const Home = () => {
@@ -10,12 +9,11 @@ const Home = () => {
   const [userImage, setUserImage] = useState('');
   const token = localStorage.getItem('spotifyAuthToken');
 
-  if (!token) {
-    // If not logged in, redirect to login or show a message
-    navigate('/login');
-    // Alternatively, you can display a login prompt instead of redirecting
-    // return <div>Please log in to view this page</div>;
-  }
+  useEffect(() => {
+    if (token) {
+      fetchSpotifyData();
+    }
+  }, [token]);
 
   const fetchSpotifyData = async () => {
     // Example function to fetch data from Spotify API
@@ -33,26 +31,46 @@ const Home = () => {
     console.log(data); // Log the response for now
   };
 
-  React.useEffect(() => {
-    if (token) {
-      fetchSpotifyData();
-    }
-  }, [token]);
-
   return (
-    <div>
+    <div style={pageStyle}>
       {token ? (
         <>
-        <h1>{userImage && <img src={userImage} alt="User Profile" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />}
-        {userName && <>Hi {userName}</>}</h1>
-         <CurrentlyPlaying token={token} />
-         </>
+          <div style={cardStyle}>
+            {userImage && <img src={userImage} alt="User Profile" style={imageStyle} />}
+            {userName && <p>Hi, {userName}</p>}
+          </div>
+          <div style={cardStyle}>
+            <CurrentlyPlaying token={token} />
+          </div>
+        </>
       ) : (
-      <p>Log in plz (:</p>
-        // <Login />
+        <div style={cardStyle}><p>Log in plz (:</p></div>
       )}
     </div>
   );
+};
+
+const pageStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  padding: '20px'
+};
+
+const cardStyle = {
+  backgroundColor: '#f9f9f9',
+  borderRadius: '10px',
+  boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+  margin: '10px',
+  padding: '20px',
+  textAlign: 'center',
+  width: '300px' // Adjust as needed
+};
+
+const imageStyle = {
+  width: '100px',
+  height: '100px',
+  borderRadius: '50%'
 };
 
 export default Home;

@@ -44,7 +44,8 @@ const Home = () => {
         <h1>{userImage && <img src={userImage} alt="User Profile" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />}
         {userName && <>Hi {userName}</>}</h1>
       ) : (
-        <Login />
+      <p>Log in plz (:</p>
+        // <Login />
       )}
     </div>
   );

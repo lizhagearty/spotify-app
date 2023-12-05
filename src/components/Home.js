@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CurrentlyPlaying from './CurrentlyPlaying';
+import PlaylistGenerator from './PlaylistGenerator';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -42,6 +43,7 @@ const Home = () => {
           <div style={cardStyle}>
             <CurrentlyPlaying token={token} />
           </div>
+          <PlaylistGenerator token={token} />
         </>
       ) : (
         <div style={cardStyle}><p>Log in plz (:</p></div>

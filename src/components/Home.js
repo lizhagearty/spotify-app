@@ -6,6 +6,7 @@ import Login from './Login'; // Assuming Login is your login button component
 const Home = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
+  const [userImage, setUserImage] = useState('');
   const token = localStorage.getItem('spotifyAuthToken');
 
   if (!token) {
@@ -24,6 +25,10 @@ const Home = () => {
     });
     const data = await response.json();
     setUserName(data.display_name);
+    // Set the user's profile image URL
+    if (data.images && data.images.length > 0) {
+        setUserImage(data.images[1].url); 
+      }
     console.log(data); // Log the response for now
   };
 
@@ -36,7 +41,8 @@ const Home = () => {
   return (
     <div>
       {token ? (
-        <h1>{userName && <p>Hi {userName}</p>}</h1>
+        <h1>{userImage && <img src={userImage} alt="User Profile" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />}
+        {userName && <>Hi {userName}</>}</h1>
       ) : (
         <Login />
       )}

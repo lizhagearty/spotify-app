@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Login from './Login'; // Assuming Login is your login button component
+import CurrentlyPlaying from './CurrentlyPlaying';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -41,8 +42,11 @@ const Home = () => {
   return (
     <div>
       {token ? (
+        <>
         <h1>{userImage && <img src={userImage} alt="User Profile" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />}
         {userName && <>Hi {userName}</>}</h1>
+         <CurrentlyPlaying token={token} />
+         </>
       ) : (
       <p>Log in plz (:</p>
         // <Login />

@@ -1,7 +1,7 @@
 // src/components/Login.js
 
 const CLIENT_ID = 'da1f1acb01854c77a810994dbdac08ab'; // Replace with your Spotify Client ID
-const REDIRECT_URI = 'http://localhost:3000/callback'; // Your Redirect URI
+const REDIRECT_URI = process.env.REACT_APP_SPOTIFY_CALLBACK_URL;
 const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
 const RESPONSE_TYPE = 'token';
 const SCOPES = [
